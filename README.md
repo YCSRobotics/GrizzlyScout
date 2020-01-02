@@ -1,6 +1,6 @@
 # GrizzlyScout
 
-![](readme_images/preview.jpg)
+<img src="readme_images/preview.jpg" width=40%/>
 
 GrizzlyScout is an FRC scouting application designed to alleviate many of the common issues with scouting that Grizzly Robotics has identified.
 
