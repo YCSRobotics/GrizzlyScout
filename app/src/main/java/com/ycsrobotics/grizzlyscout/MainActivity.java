@@ -27,6 +27,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, TeamFragment.OnFragmentInteractionListener, SplashFragment.OnFragmentInteractionListener {
@@ -46,11 +52,30 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         initializeDefaults();
+
+        //load our database driver
+        try {
+            DriverManager.registerDriver((Driver) Class.forName("org.sqldroid.SQLDroidDriver").newInstance());
+        } catch (Exception e) {
+            Log.e(getString(R.string.app_name), "Failed to register SQLDroidDriver");
+            throw new RuntimeException("Failed to register SQLDroidDriver");
+        }
+
+        String jdbcUrl = "jdbc:sqldroid:" + this.getFilesDir().getPath() + "/grizzlyscout.db";
+        try {
+            Connection connection = DriverManager.getConnection(jdbcUrl);
+            connection.close();
+
+            Log.i(getString(R.string.app_name), "Connection to local GrizzlyScout database successful!");
+        } catch (SQLException e) {
+            Log.e(getString(R.string.app_name), "Error connecting to GrizzlyScout database!", e);
+            throw new RuntimeException(e);
+        }
     }
 
-    public void initializeDefaults() {
-        TextView view = findViewById(R.id.bottom_nav_version);
-        view.setText(getString(R.string.app_name).concat(" Version: ").concat(BuildConfig.VERSION_NAME));
+        public void initializeDefaults() {
+            TextView view = findViewById(R.id.bottom_nav_version);
+            view.setText(getString(R.string.app_name).concat(" Version: ").concat(BuildConfig.VERSION_NAME));
 
         showSplashFragment(null);
     }
