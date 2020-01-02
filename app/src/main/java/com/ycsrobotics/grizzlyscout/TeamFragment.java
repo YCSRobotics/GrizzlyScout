@@ -10,6 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.ycsrobotics.grizzlyscout.AsyncDatabaseTasks.UpdateTeamMatchTask;
+import com.ycsrobotics.grizzlyscout.CompetitionObjects.Match;
 
 
 /**
@@ -80,9 +85,24 @@ public class TeamFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         Button button = getActivity().findViewById(R.id.syncButton);
+        EditText matchNumber = getActivity().findViewById(R.id.matchNumber);
+        EditText teamNumber = getActivity().findViewById(R.id.teamNumber);
+        EditText teleopHatchesScored = getActivity().findViewById(R.id.hatchesScoredTeleop);
 
         button.setOnClickListener(v -> {
+            int intMatchNumber = Integer.parseInt(matchNumber.getText().toString());
+            int intTeamNumber = Integer.parseInt(teamNumber.getText().toString());
+            int intTeleopHatchesScored = Integer.parseInt(matchNumber.getText().toString());
 
+            Match match = new Match(intMatchNumber, intTeamNumber, 0, 0, 0,
+                    0, 0, 0, 0,
+                    0, 0, 0, 0,
+                    0, 0, intTeleopHatchesScored, 0 ,0,
+                    0, 0, 0, 0, 0,
+                    0, null);
+
+            UpdateTeamMatchTask teamMatchTask = new UpdateTeamMatchTask(getActivity(), match);
+            teamMatchTask.execute("");
         });
     }
 
