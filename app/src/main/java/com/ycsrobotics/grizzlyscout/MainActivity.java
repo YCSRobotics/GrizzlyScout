@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 
@@ -61,9 +62,21 @@ public class MainActivity extends AppCompatActivity
             throw new RuntimeException("Failed to register SQLDroidDriver");
         }
 
-        String jdbcUrl = "jdbc:sqldroid:" + this.getFilesDir().getPath() + "/grizzlyscout.db";
+        String jdbcUrl = "jdbc:sqldroid:" + this.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) + "/matches.db";
         try {
             Connection connection = DriverManager.getConnection(jdbcUrl);
+
+            Log.v(getString(R.string.app_name), "Using database directory ".concat(jdbcUrl));
+            //TODO update for 2020 game
+            connection.createStatement().execute("CREATE TABLE IF NOT EXISTS MATCHES (UniqueKey integer primary key, Match_Number integer, Team_Number integer, " +
+                    "Sandstorm_Hab_Level integer, Sandstorm_Cargoship_Hatches_Scored integer, Sandstorm_Cargoship_Cargo_Scored integer, " +
+                    "Sandstorm_Low_Hatches_Scored integer, Sandstorm_Low_Cargo_Scored integer, Sandstorm_Mid_Hatches_Scored integer, " +
+                    "Sandstorm_Mid_Cargo_Scored integer, Sandstorm_High_Hatches_Scored integer, Sandstorm_High_Cargo_Scored integer, " +
+                    "Sandstorm_Hatches_Dropped integer, Sandstorm_Cargo_Dropped integer, Teleop_Cargoship_Hatches_Scored integer, " +
+                    "Teleop_Cargoship_Cargo_Scored integer, Teleop_Low_Hatches_Scored integer, Teleop_Low_Cargo_Scored integer," +
+                    "Teleop_Mid_Hatches_Scored integer, Teleop_Mid_Cargo_Scored integer, Teleop_High_Hatches_Scored integer," +
+                    "Teleop_High_Cargo_Scored integer, Teleop_Hatches_Dropped integer, Teleop_Cargo_Dropped integer," +
+                    "MechanicalIssues integer, AdditionalNotes string)");
             connection.close();
 
             Log.i(getString(R.string.app_name), "Connection to local GrizzlyScout database successful!");
