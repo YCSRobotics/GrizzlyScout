@@ -22,7 +22,10 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
-    sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/fragment_layouts'] } }
+    sourceSets { main { res.srcDirs = [
+            'src/main/res/fragments',
+            'src/main/res/main_views',
+            'src/main/res'] } }
 }
 
 dependencies {

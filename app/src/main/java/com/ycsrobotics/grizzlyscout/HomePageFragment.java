@@ -86,6 +86,7 @@ public class HomePageFragment extends Fragment {
 
             FragmentManager fm = getActivity().getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
+            transaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
             transaction.replace(R.id.contentFragment, fragmentTeam);
             transaction.addToBackStack(null);
             transaction.commit();
