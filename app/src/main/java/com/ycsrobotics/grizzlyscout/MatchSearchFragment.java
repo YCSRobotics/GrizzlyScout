@@ -9,23 +9,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-
-import com.ycsrobotics.grizzlyscout.AsyncDatabaseTasks.UpdateTeamMatchTask;
-import com.ycsrobotics.grizzlyscout.CompetitionObjects.Match;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TeamFragment.OnFragmentInteractionListener} interface
+ * {@link MatchSearchFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TeamFragment#newInstance} factory method to
+ * Use the {@link MatchSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TeamFragment extends Fragment {
+public class MatchSearchFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,7 +31,7 @@ public class TeamFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public TeamFragment() {
+    public MatchSearchFragment() {
         // Required empty public constructor
     }
 
@@ -47,11 +41,11 @@ public class TeamFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TeamFragment.
+     * @return A new instance of fragment MatchSearchFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TeamFragment newInstance(String param1, String param2) {
-        TeamFragment fragment = new TeamFragment();
+    public static MatchSearchFragment newInstance(String param1, String param2) {
+        MatchSearchFragment fragment = new MatchSearchFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -72,7 +66,7 @@ public class TeamFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new_team, container, false);
+        return inflater.inflate(R.layout.fragment_match_search, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -80,30 +74,6 @@ public class TeamFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        Button button = getActivity().findViewById(R.id.syncButton);
-        EditText matchNumber = getActivity().findViewById(R.id.matchNumber);
-        EditText teamNumber = getActivity().findViewById(R.id.teamNumber);
-        EditText teleopHatchesScored = getActivity().findViewById(R.id.hatchesScoredTeleop);
-
-        button.setOnClickListener(v -> {
-            int intMatchNumber = Integer.parseInt(matchNumber.getText().toString());
-            int intTeamNumber = Integer.parseInt(teamNumber.getText().toString());
-            int intTeleopHatchesScored = Integer.parseInt(matchNumber.getText().toString());
-
-            Match match = new Match(intMatchNumber, intTeamNumber, 0, 0, 0,
-                    0, 0, 0, 0,
-                    0, 0, 0, 0,
-                    0, 0, intTeleopHatchesScored, 0 ,0,
-                    0, 0, 0, 0, 0,
-                    0, null);
-
-            UpdateTeamMatchTask teamMatchTask = new UpdateTeamMatchTask(getActivity(), match);
-            teamMatchTask.execute("");
-        });
     }
 
     @Override

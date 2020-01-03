@@ -73,7 +73,7 @@ public class UpdateTeamMatchTask extends AsyncTask<String, String, String> {
             connection.close();
             Log.i(myActivity.get().getString(R.string.app_name), "InsertTeamQuerySuccessful!");
         } catch (SQLException e) {
-            Log.e(myActivity.get().getString(R.string.app_name), "Error connecting to GrizzlyScout database!", e);
+            Log.e(myActivity.get().getString(R.string.app_name), "Error connecting to grizzlyscout_icon database!", e);
             throw new RuntimeException(e);
         }
 

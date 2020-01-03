@@ -3,9 +3,6 @@ package com.ycsrobotics.grizzlyscout;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
@@ -26,9 +23,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.Driver;
@@ -36,7 +31,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, TeamFragment.OnFragmentInteractionListener, SplashFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, EditTeamFragment.OnFragmentInteractionListener, HomePageFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,9 +74,9 @@ public class MainActivity extends AppCompatActivity
                     "MechanicalIssues integer, AdditionalNotes string)");
             connection.close();
 
-            Log.i(getString(R.string.app_name), "Connection to local GrizzlyScout database successful!");
+            Log.i(getString(R.string.app_name), "Connection to local grizzlyscout_icon database successful!");
         } catch (SQLException e) {
-            Log.e(getString(R.string.app_name), "Error connecting to GrizzlyScout database!", e);
+            Log.e(getString(R.string.app_name), "Error connecting to grizzlyscout_icon database!", e);
             throw new RuntimeException(e);
         }
     }
@@ -126,7 +121,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void showTeamFragment() {
-        Fragment fragmentTeam = new TeamFragment();
+        Fragment fragmentTeam = new EditTeamFragment();
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
@@ -166,7 +161,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void showSplashFragment(View view) {
-        Fragment fragmentSplash = new SplashFragment();
+        Fragment fragmentSplash = new HomePageFragment();
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
