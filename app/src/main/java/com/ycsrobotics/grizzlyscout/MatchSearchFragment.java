@@ -5,10 +5,15 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.ycsrobotics.grizzlyscout.RecyclerAdapters.MatchRecyclerAdapter;
 
 
 /**
@@ -19,7 +24,7 @@ import android.view.ViewGroup;
  * Use the {@link MatchSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MatchSearchFragment extends Fragment {
+public class MatchSearchFragment extends Fragment{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,6 +35,10 @@ public class MatchSearchFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     public MatchSearchFragment() {
         // Required empty public constructor
@@ -43,6 +52,7 @@ public class MatchSearchFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment MatchSearchFragment.
      */
+
     // TODO: Rename and change types and number of parameters
     public static MatchSearchFragment newInstance(String param1, String param2) {
         MatchSearchFragment fragment = new MatchSearchFragment();
@@ -66,13 +76,31 @@ public class MatchSearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_match_search, container, false);
+        return inflater.inflate(R.layout.fragment_team_search, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Log.v(getString(R.string.app_name), "Populating recyclerview data!");
+
+        if (getView() != null) {
+            recyclerView = getView().findViewById(R.id.fragment_team_search);
+            layoutManager = new LinearLayoutManager(getContext());
+            recyclerView.setLayoutManager(layoutManager);
+            mAdapter = new MatchRecyclerAdapter(this.getContext());
+            recyclerView.setAdapter(mAdapter);
+
+        } else {
+            Log.e(getString(R.string.app_name), this.getClass() + " has a view of null!");
         }
     }
 

@@ -31,7 +31,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, EditTeamFragment.OnFragmentInteractionListener, HomePageFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, EditTeamFragment.OnFragmentInteractionListener, HomePageFragment.OnFragmentInteractionListener,
+        MatchSearchFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,18 +99,15 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void showTeamFragment() {
-        Fragment fragmentTeam = new EditTeamFragment();
-
+    public void showFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
-        transaction.replace(R.id.contentFragment, fragmentTeam);
+        transaction.replace(R.id.contentFragment, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -118,11 +116,11 @@ public class MainActivity extends AppCompatActivity
         switch (id) {
             case R.id.scout_new_team:
                 Log.i(getString(R.string.app_name), "Scout New Team option has been selected");
-                showTeamFragment();
+                showFragment(new EditTeamFragment());
                 break;
             case R.id.edit_existing_team:
                 Log.i(getString(R.string.app_name), "Edit Existing Team option has been selected");
-                showTeamFragment();
+                showFragment(new MatchSearchFragment());
                 break;
             default:
                 //should never happen
